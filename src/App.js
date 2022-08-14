@@ -15,40 +15,38 @@ import makeAnimated from 'react-select/animated';
 
 import * as constants from './constants';
 
-//import Parse from 'parse';
-
 const animatedComponents = makeAnimated();
 
 
 function App() {
 
-  const gridRef = useRef(); // Optional - for accessing Grid's API
-  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
+const gridRef = useRef(); // Optional - for accessing Grid's API
+const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
 
-  const [selectedResidential,setSelectedResidential] = useState({ value :0,label: 'Select' });
+const [selectedResidential,setSelectedResidential] = useState({ value :0,label: 'Select' });
 
 
-    // Each Column Definition results in one Column.
-  const [columnDefs, setColumnDefs] = useState([
-    {field: 'residentname', filter: true},
-    {field: 'residential', filter: true},
-    {field: 'house', filter: true},
-    {field: 'year', filter: true},
-    {field: 'Jan'},
-    {field: 'Feb'},
-    {field: 'Mar'},
-    {field: 'Apr'},
-    {field: 'May'},
-    {field: 'Jun'},
-    {field: 'Jul'},
-    {field: 'Aug'},
-    {field: 'Sep'},
-    {field: 'Oct'},
-    {field: 'Nov'},
-    {field: 'Dec'},
-    {field: 'yearamount'},
-    
-  ]);
+// Each Column Definition results in one Column.
+const [columnDefs, setColumnDefs] = useState([
+  {field: 'residentname', filter: true},
+  {field: 'residential', filter: true},
+  {field: 'house', filter: true},
+  {field: 'year', filter: true},
+  {field: 'Jan'},
+  {field: 'Feb'},
+  {field: 'Mar'},
+  {field: 'Apr'},
+  {field: 'May'},
+  {field: 'Jun'},
+  {field: 'Jul'},
+  {field: 'Aug'},
+  {field: 'Sep'},
+  {field: 'Oct'},
+  {field: 'Nov'},
+  {field: 'Dec'},
+  {field: 'yearamount'},
+  
+]);
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = useMemo( ()=> ({
@@ -96,29 +94,6 @@ const buttonListener = useCallback( e => {
 
 }, []);
 
-  //const [dataReport,setDataReport] = useState([]);
-
- 
-
-  //  useEffect(() => {
-
-  //    //console.log('Entro');
-
-  //    showReport();
-
-  //  },[])
-
-
-  //  const showReport = async () => {
-      
-  //   let result = await axios.get('http://localhost:3000/report')
- 
-  //   //console.log(JSON.parse(JSON.stringify(result)));
- 
-  //   setDataReport(JSON.parse(JSON.stringify(result)));
-    
-  //  }
-
   const options = [
     { value: '1', label: 'VISTA REAL' },
   ]
@@ -136,7 +111,6 @@ const buttonListener = useCallback( e => {
 
   useEffect(() => {
 
-    console.log('Entro actualizar');
     newGrid();
 
   },[selectedResidential])
@@ -147,7 +121,7 @@ const buttonListener = useCallback( e => {
 
     <>
 
-    <Row className={'mx-auto'} style={{ 'marginTop' : 15 }}>
+      <Row className={'mx-auto'} style={{ 'marginTop' : 15 }}>
 
       <Col>
       
@@ -200,75 +174,10 @@ const buttonListener = useCallback( e => {
       </Col>
 
 
-    </Row>
-
-
-   
-
-
-
-
-
-    {/* <Button variant="primary">Primary</Button>
-    <div style={{ width: '1000px' }}>
-
-    <Select
-      closeMenuOnSelect={true}
-      isClearable
-      //components={animatedComponents}
-      //defaultValue={[colourOptions[4], colourOptions[5]]}
-      placeholder={'RESIDENTIAL ....'}
-      onChange={(e) => { methodOnChange(e) } }
-      //isMulti
-      options={options}
-    />
-
-    </div>
-
-
-    <div className="ag-theme-alpine" style={{width: '1000px', height: '600px'}}>
-      
-    <AgGridReact
-    ref={gridRef} // Ref for accessing Grid's API
-
-    rowData={rowData} // Row Data for Rows
-
-    columnDefs={columnDefs} // Column Defs for Columns
-    defaultColDef={defaultColDef} // Default Column Properties
-
-    animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-    rowSelection='multiple' // Options - allows click selection of rows
-
-    onCellClicked={cellClickedListener} // Optional - registering for Grid Event
-    />
-   
-   
-   </div> */}
-
+      </Row>
     
     </>
-    
 
-
-//     <div>
-      
-//       <h1>Test Alberto Garay</h1><br></br>
-
-// {/* {console.log(dataReport.data[0].residential)} */}
-//       {/* {dataReport.data && dataReport.data.map(item => {
-//         {<h3>Residential</h3>}
-
-      
-
-//       })}  */}
-//           <button onClick={buttonListener}>Push Me</button>
-
-//           {console.log(rowData)}
-
-
-
-
-//     </div>
   );
 }
 
