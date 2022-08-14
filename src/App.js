@@ -14,12 +14,9 @@ import * as constants from './constants';
 const animatedComponents = makeAnimated();
 
 function App() {
-
 const gridRef = useRef(); // Optional - for accessing Grid's API
 const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
-
 const [selectedResidential,setSelectedResidential] = useState({ value :0,label: 'Select' });
-
 
 // Each Column Definition results in one Column.
 const [columnDefs, setColumnDefs] = useState([
