@@ -1,23 +1,17 @@
 import axios from 'axios';
 import React,{ useState, useRef, useEffect, useMemo, useCallback}  from 'react';
 import {Button,Card,Row,Col} from 'react-bootstrap';
-
 //import logo from './logo.svg';
 import './App.css';
 //import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
-
-
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
-
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
 import * as constants from './constants';
 
 const animatedComponents = makeAnimated();
-
 
 function App() {
 
