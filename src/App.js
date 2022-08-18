@@ -17,6 +17,7 @@ function App() {
 const gridRef = useRef(); // Optional - for accessing Grid's API
 const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
 const [selectedResidential,setSelectedResidential] = useState({ value :0,label: 'Select' });
+const [selectedReportType,setSelectedReportType] = useState({ value :0,label: 'Select' });
 
 // Each Column Definition results in one Column.
 const [columnDefs, setColumnDefs] = useState([
@@ -65,9 +66,22 @@ useEffect(() => {
 const newGrid = async () => {
 
 
-  //console.log(constants.path_url + 'report?Residential=' + selectedResidential.value.toString());
+  //console.log(constants.path_url + 'report?Residential=' + selectedResidential.value.toString() + "&ReportType=" + selectedReportType.value.toString());
 
-  let result = await axios.get(constants.path_url + 'report?Residential=' + selectedResidential.value.toString() )
+  if(!selectedResidential.value)
+  {
+    
+    setRowData(null);
+    return;
+  }
+  
+  if(!selectedReportType.value)
+  {
+    setRowData(null);
+    return;
+  }
+
+  let result = await axios.get(constants.path_url + 'report?Residential=' + selectedResidential.value.toString() + "&ReportType=" + selectedReportType.value.toString())
 
   //console.log(JSON.parse(JSON.stringify(result)).data);
 
@@ -90,6 +104,24 @@ const buttonListener = useCallback( e => {
     { value: '1', label: 'VISTA REAL' },
   ]
 
+
+  const optionsReports = [
+    { value: '1', label: 'MENSUALIDADES' },
+    { value: '2', label: 'RESERVACIONES' },
+    
+  ]
+
+  const methodOnChangeReportType = (item) => {
+
+    if(!item) {setSelectedReportType({ value :0,label: 'Select' }); return;} 
+    
+    setSelectedReportType(item)
+   
+  }
+
+
+
+
   const methodOnChange = (item) => {
 
     if(!item) {setSelectedResidential({ value :0,label: 'Select' }); return;} 
@@ -97,7 +129,6 @@ const buttonListener = useCallback( e => {
     //gridRef.current.api.deselectAll();
     setSelectedResidential(item)
    
-
   }
 
 
@@ -105,7 +136,7 @@ const buttonListener = useCallback( e => {
 
     newGrid();
 
-  },[selectedResidential])
+  },[selectedResidential,selectedReportType])
 
 
 
@@ -122,8 +153,21 @@ const buttonListener = useCallback( e => {
       <Card.Body>
         {/* <Card.Title>Pagos por Residencial</Card.Title> */}
           <Row className={'mx-auto'}>
-            <Col>
+            <Col className="row align-items-start">
             
+            <Select
+                closeMenuOnSelect={true}
+                isClearable
+                //components={animatedComponents}
+                //defaultValue={[colourOptions[4], colourOptions[5]]}
+                placeholder={'SELECCIONA TIPO REPORTE ....'}
+                onChange={(e) => { methodOnChangeReportType(e) } }
+                //isMulti
+                options={optionsReports}
+              />
+            </Col>
+
+            <Col className="row align-items-start">
               <Select
                 closeMenuOnSelect={true}
                 isClearable
