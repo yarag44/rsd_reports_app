@@ -108,6 +108,8 @@ const buttonListener = useCallback( e => {
   const optionsReports = [
     { value: '1', label: 'MENSUALIDADES' },
     { value: '2', label: 'RESERVACIONES' },
+    { value: '3', label: 'SERVICIOS' },
+    
     
   ]
 
