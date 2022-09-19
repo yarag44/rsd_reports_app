@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React,{ useState, useRef, useEffect, useMemo, useCallback}  from 'react';
-import {Button,Card,Row,Col} from 'react-bootstrap';
+import {Card,Row,Col} from 'react-bootstrap';
 //import logo from './logo.svg';
 import './App.css';
 //import { render } from 'react-dom';
@@ -18,6 +18,7 @@ const gridRef = useRef(); // Optional - for accessing Grid's API
 const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
 const [selectedResidential,setSelectedResidential] = useState({ value :0,label: 'Select' });
 const [selectedReportType,setSelectedReportType] = useState({ value :0,label: 'Select' });
+const [selectedCurrency,setSelectedCurrency] = useState({ value :0,label: 'Select' });
 
 // Each Column Definition results in one Column.
 const [columnDefs, setColumnDefs] = useState([
@@ -81,7 +82,16 @@ const newGrid = async () => {
     return;
   }
 
-  let result = await axios.get(constants.path_url + 'report?Residential=' + selectedResidential.value.toString() + "&ReportType=" + selectedReportType.value.toString())
+  
+  if(!selectedCurrency.value)
+  {
+    setRowData(null);
+    return;
+  }
+
+
+
+  let result = await axios.get(constants.path_url + 'report?Residential=' + selectedResidential.value.toString() + "&ReportType=" + selectedReportType.value.toString() + "&Currency=" + selectedCurrency.value.toString())
 
   //console.log(JSON.parse(JSON.stringify(result)).data);
 
@@ -113,6 +123,15 @@ const buttonListener = useCallback( e => {
     
   ]
 
+  const optionsCurrency = [
+    { value: '1', label: 'PESOS' },
+    { value: '2', label: 'DOLARES' },
+    
+  ]
+
+
+
+
   const methodOnChangeReportType = (item) => {
 
     if(!item) {setSelectedReportType({ value :0,label: 'Select' }); return;} 
@@ -134,11 +153,23 @@ const buttonListener = useCallback( e => {
   }
 
 
+
+  const methodOnChangeCurrency = (item) => {
+
+    if(!item) {setSelectedCurrency({ value :0,label: 'Select' }); return;} 
+
+    //gridRef.current.api.deselectAll();
+    setSelectedCurrency(item)
+   
+  }
+
+
+
   useEffect(() => {
 
     newGrid();
 
-  },[selectedResidential,selectedReportType])
+  },[selectedResidential,selectedReportType,selectedCurrency])
 
 
 
@@ -155,12 +186,29 @@ const buttonListener = useCallback( e => {
       <Card.Body>
         {/* <Card.Title>Pagos por Residencial</Card.Title> */}
           <Row className={'mx-auto'}>
+
+
+          <Col className="row align-items-start">
+            
+            <Select
+                closeMenuOnSelect={true}
+                isClearable
+                components={animatedComponents}
+                //defaultValue={[colourOptions[4], colourOptions[5]]}
+                placeholder={'SELECCIONA MONEDA ....'}
+                onChange={(e) => { methodOnChangeCurrency(e) } }
+                //isMulti
+                options={optionsCurrency}
+              />
+            </Col>
+
+
             <Col className="row align-items-start">
             
             <Select
                 closeMenuOnSelect={true}
                 isClearable
-                //components={animatedComponents}
+                components={animatedComponents}
                 //defaultValue={[colourOptions[4], colourOptions[5]]}
                 placeholder={'SELECCIONA TIPO REPORTE ....'}
                 onChange={(e) => { methodOnChangeReportType(e) } }
@@ -173,7 +221,7 @@ const buttonListener = useCallback( e => {
               <Select
                 closeMenuOnSelect={true}
                 isClearable
-                //components={animatedComponents}
+                components={animatedComponents}
                 //defaultValue={[colourOptions[4], colourOptions[5]]}
                 placeholder={'SELECCIONA RESIDENTIAL ....'}
                 onChange={(e) => { methodOnChange(e) } }
