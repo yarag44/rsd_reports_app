@@ -102,13 +102,13 @@ const newGrid = async () => {
 
 
 // Example using Grid's API
-const buttonListener = useCallback( e => {
-  gridRef.current.api.deselectAll();
+// const buttonListener = useCallback( e => {
+//   gridRef.current.api.deselectAll();
 
-  //console.log(rowData);
+//   //console.log(rowData);
 
 
-}, []);
+// }, []);
 
   const options = [
     { value: '1', label: 'VISTA REAL' },
